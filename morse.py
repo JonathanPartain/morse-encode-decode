@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os  # to clear terminal
+import random
 alphabet = {
     "a" : ".-",
     "b" : "-...",
@@ -26,19 +27,17 @@ alphabet = {
     "w" : ".--",
     "x" : "-..-",
     "y" : "-.--",
-    "z" : "--.."
-}
-numbers = {
-    1 : ".----",
-    2 : "..---",
-    3 : "...--",
-    4 : "....-",
-    5 : ".....",
-    6 : "-....",
-    7 : "--...",
-    8 : "---..",
-    9 : "----.",
-    0 : "-----"
+    "z" : "--..",
+    "1" : ".----",
+    "2" : "..---",
+    "3" : "...--",
+    "4" : "....-",
+    "5" : ".....",
+    "6" : "-....",
+    "7" : "--...",
+    "8" : "---..",
+    "9" : "----.",
+    "0" : "-----"
 }
 morse_a = {
     ".-" : "a",
@@ -84,7 +83,7 @@ def encode(str):
         if s.isalpha():  # alphabet
             out += alphabet[s.lower()] + " "
         elif s.isdigit():
-            out += numbers[s] + " "
+            out += alphabet[s] + " "
         else:  # space
             out += " / "
     return out
@@ -99,6 +98,22 @@ def decode(str):
             out += morse_a[m]
 
     return out
+
+def learn(q):
+    for i in range(int(q)):
+        letter = random.choice(list(alphabet))
+        answer = input("What is " + letter + " in morse? ")
+        corr = alphabet[letter]
+        counter = 0
+        # check answer
+        if answer == corr:
+            print("Correct!")
+            counter += 1
+        else:
+            print("Wrong! " + letter + " is " + corr)
+    os.system("clear")
+    print("You answered " + str(counter) + " out of " + q + " correctly.")
+
 
 while True:
     print("Options: ")
@@ -119,7 +134,8 @@ while True:
         print(decode(d))
     elif ans == "3":
         os.system('clear')
-        print("Learning is not available at the moment!")
+        q = input("How many questions would you like to answer? ")
+        learn(q)
     elif ans == "q":
         print("Goodbye!")
         break
